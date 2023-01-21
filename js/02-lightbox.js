@@ -3,29 +3,30 @@ import { galleryItems } from './gallery-items.js';
 
 //находим целевые элементы
 const galeryInsertionPoint = document.querySelector('.gallery');
-console.log(galeryInsertionPoint);
 
 // создаем разметку картинок
 const InsertionContent = createGalleryCardsMarkup(galleryItems);
-console.log();
 galeryInsertionPoint.insertAdjacentHTML('afterbegin', InsertionContent);
-console.log();
+
+let gallery = new SimpleLightbox('.gallery a', { captions:true, captionsData: "alt", captionDelay:250});
+gallery.on('show.simplelightbox', function () {
+	// Do something…
+});
+
+gallery.on('error.simplelightbox', function (e) {
+	console.log(e); // Some usefull information
+});
 // создание разметки по шаблону
 function createGalleryCardsMarkup(el){
     return  el
     .map(({preview,original,description}) => {
       return `
-      <div class="gallery__item">
-        <a class="gallery__link" href="${original}" onclick = "event.preventDefault()">
-         <img
-           class="gallery__image"
-           src="${preview}"
-           data-source="${original}"
-           alt="${description}"
-         />
-        </a>
-      </div>`;
+      <a class="gallery__item" href="${original}" onclick = "event.preventDefault()">
+      <img class="gallery__image" src="${preview}" alt="${description}" />
+    </a>
+      `;
        
     })
     .join('');
 }
+
