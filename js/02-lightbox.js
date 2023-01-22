@@ -1,32 +1,28 @@
-import { galleryItems } from './gallery-items.js';
+import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
 //находим целевые элементы
-const galeryInsertionPoint = document.querySelector('.gallery');
+const galeryInsertionPoint = document.querySelector(".gallery");
 
 // создаем разметку картинок
 const InsertionContent = createGalleryCardsMarkup(galleryItems);
-galeryInsertionPoint.insertAdjacentHTML('afterbegin', InsertionContent);
+galeryInsertionPoint.insertAdjacentHTML("afterbegin", InsertionContent);
 
-let gallery = new SimpleLightbox('.gallery a', { captions:true, captionsData: "alt", captionDelay:250});
-gallery.on('show.simplelightbox', function () {
-	// Do something…
+let gallery = new SimpleLightbox(".gallery a", {
+  captions: true,
+  captionsData: "alt",
+  captionDelay: 250,
 });
 
-gallery.on('error.simplelightbox', function (e) {
-	console.log(e); // Some usefull information
-});
 // создание разметки по шаблону
-function createGalleryCardsMarkup(el){
-    return  el
-    .map(({preview,original,description}) => {
+function createGalleryCardsMarkup(el) {
+  return el
+    .map(({ preview, original, description }) => {
       return `
       <a class="gallery__item" href="${original}" onclick = "event.preventDefault()">
       <img class="gallery__image" src="${preview}" alt="${description}" />
     </a>
       `;
-       
     })
-    .join('');
+    .join("");
 }
-
